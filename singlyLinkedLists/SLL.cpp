@@ -52,8 +52,8 @@ void SLL::addAtFront(int x) {  //3 pts
 	}//end if
 	else
 	{
-		SNode temp = new SNode(x);
-		temp.next = first;
+		SNode *temp = new SNode(x);
+		temp->next = first;
 		first = temp;
 	}
 
@@ -97,32 +97,23 @@ void SLL::addAtK(int x, int k){
 void SLL::join(SLL *list2){ //3 pts
 	SNode* temp;
 	SNode* temp2;
-	if (first == NULL || list2->first == NULL){
+	if (first == NULL || list2->first == NULL) {
 		cout << "One or both lists are empty" << endl;
 	}//end if
-
-	else
-	{
+	else {
 		temp = first;
-
-		if (temp->next == NULL)
-		{
+		if (temp->next == NULL) {
 			temp->next = list2->first;
 		}//end if
-		else
-		{
-			while ( temp->next != NULL)
-			{
+		else {
+			while ( temp->next != NULL) {
 				temp2=temp;
 				temp =temp->next;
 			}//end while
 			temp->next = list2->first;
-
 		}//end else
 	}//end else
-//join the list with list2, making the current list one longer list
-
-}
+}//join the list with list2, making the current list one longer list
 
 int SLL::pop() {
 	if (size > 0) {
@@ -150,7 +141,13 @@ int SLL::pop() {
 }
 SNode *SLL::findKth(int k) { //4 pts
 // find the node at the kth location and return it
-}
+	SNode *tmp = first;
+	for (int i = 0; i < k + 1; i++) {
+		tmp = tmp->next;
+	} // for
+	return tmp;
+} // findKth
+
 int SLL::findK(int k) {
 	SNode *tmp = first;
 	int ind = 0;
@@ -167,22 +164,33 @@ int SLL::findK(int k) {
 }
 int SLL::remFirst() { //3 pts
 //remove the first node from the list, returning its data
+	SNode *tmp = first;
+	int tmpData = tmp->data;
+	first = first->next;
+	free(tmp);
+	return tmpData;
 }
 int SLL::remKth(int k) {
 	if (k < size && k > 0) {
 		SNode *tmp = first;
-		for (int i = 0; i < k -1; i++) {
+		for (int i = 0; i < k - 1; i++) {
 			tmp = tmp->next;
 		}
 		int x = tmp->next->data;
-		SNode *tmp2= tmp->next;
+		SNode *tmp2 = tmp->next;
 		tmp->next = tmp->next->next;
 		delete tmp2;
 		return x;
 	}
-void SLL::reverseList(){ //10 pts
-//Reverses the list, after completed, the last should be the first
-//in the list and the first should be the last
-//Challenge - I did this with one pass across the list
 }
-
+void SLL::reverseList() { // 10 pts
+	SNode *current = first;
+	SNode *previous = NULL;
+	SNode *nxt = NULL;
+	while(current != NULL) {
+		nxt = current->next;
+		current->next = previous;
+		previous = current;
+		current = nxt;
+	}
+}

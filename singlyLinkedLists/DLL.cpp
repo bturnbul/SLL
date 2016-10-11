@@ -168,7 +168,7 @@ int DLL::remKth(int k) { //4 pts
 	}
 }
 void RecursiveReverse(DLL *l2) { //6 pts
-// RECURSIVELY reverses the list
+//RECURSIVELY reverses the list
 
 }
 void DLL::sortDLL() { //10 pts

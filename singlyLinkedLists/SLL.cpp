@@ -49,12 +49,15 @@ void SLL::addAtFront(int x) {  //3 pts
 	if (first == NULL)
 	{
 		first = new SNode(x);
+		size += 1;
 	}//end if
 	else
 	{
 		SNode *temp = new SNode(x);
+		temp->next = NULL;
 		temp->next = first;
 		first = temp;
+		size += 1;
 	}
 
 }
@@ -62,6 +65,7 @@ void SLL::addAtFront(int x) {  //3 pts
 void SLL::push(int x) { //6 pts
 //add a new node to the end of the list, with data x
 	SNode* temp = new SNode(x);
+	temp->next = NULL;
 
 	if (first == NULL)
 	{
@@ -70,11 +74,11 @@ void SLL::push(int x) { //6 pts
 	else
 	{
 		SNode* last = first;
-		while(last->next)
+		while(last->next != NULL)
 		{
 			last = last->next;
-			last->next = temp;
 		}//end while
+		last->next = temp;
 	}//end else
 }
 
@@ -142,7 +146,7 @@ int SLL::pop() {
 SNode *SLL::findKth(int k) { //4 pts
 // find the node at the kth location and return it
 	SNode *tmp = first;
-	for (int i = 0; i < k + 1; i++) {
+	for (int i = 0; i < k; i++) {
 		tmp = tmp->next;
 	} // for
 	return tmp;
@@ -181,6 +185,9 @@ int SLL::remKth(int k) {
 		tmp->next = tmp->next->next;
 		delete tmp2;
 		return x;
+	}
+	else {
+		return 0;
 	}
 }
 void SLL::reverseList() { // 10 pts

@@ -80,28 +80,55 @@ void DLL::push(int x) { //2 pts
 		}
 		final->next = tmp;
 		tmp->prev = final;
+		last = tmp;
 	}
 	size += 1;
 }
 
 void DLL::addAtK(int x, int k){ //4 pts
 //add at position k a new node with x as the data
-	DNode *tmp;
-	tmp->next = first;
-	for (int i = 0; i < k; ++i) {
-		tmp = tmp->next;
+	DNode *tmp = new DNode(x);
+	if (k <= 1) {
+		tmp->next = first;
+		if (first != NULL) {
+			first->prev = tmp;
+		}
+		first = tmp;
 	}
-	DNode *node = new DNode(x);
-	node->next = tmp->next;
-	tmp->next = node;
+	if (k >= size) {
+		tmp->prev = last;
+		if (last != NULL) {
+			last->next = tmp;
+		}
+		last = tmp;
+	}
+	if ((k > 1) && (k < size)) {
+		DNode *tmp2 = first;
+		for (int i = k; k > 1; k--) {
+			tmp2 = tmp2->next;
+		}
+		tmp->next = tmp2;
+		if (tmp2->prev != NULL) {
+			tmp2->prev->next = tmp;
+		}
+		tmp2->prev = tmp;
+	}
 	size += 1;
 }
 void DLL::join(DLL *list2){ //2 pts
 // join list 2 to the end of the list, modifying the size of the list
-	if (first == NULL || list2->first == NULL) {
-		cout << "One or both of the lists are empty";
+	int size2 = list2->size;
+	if (first == NULL) {
+		cout << "first list empty";
 	}
-
+	else if (list2->first == NULL) {
+		cout << "second list empty";
+	}
+	else {
+		last->next = list2->first;
+		list2->first->prev = last;
+		size += size2;
+	}
 }
 
 int DLL::pop() { //5 pts
@@ -110,19 +137,25 @@ int DLL::pop() { //5 pts
 	if (first == NULL) {
 		return 0;
 	}
-	else if (first == last) {
+	if (first == last) {
 		first = NULL;
 		last = NULL;
 		size -= 1;
+		return tmp->data;
 	}
 	else {
 		tmp->prev->next = NULL;
 		last = tmp->prev;
 		size -= 1;
+		return tmp->data;
 	}
 }
-DNode *DLL::findKth(int k) { 
+  DNode *DLL::findKth(int k) {
 //find the element at the kth position and returning a pointer to that node
+	DNode *temp = first;
+	for (int i = 0; i < k; i++)
+		temp = temp->next;
+	return temp;
 }
 int DLL::findK(int k) {
 	DNode *tmp = first;
@@ -154,22 +187,37 @@ int DLL::remFirst() { //2 pts
 int DLL::remKth(int k) { //4 pts
 //remove the kth element of the list, returning its data
 	DNode *tmp = first;
-	DNode *kNode;
 	if (k < size && k > 0) {
 		for (int i = 0; i < k - 1; i++) {
 			tmp = tmp->next;
-		}
+		} // for
 		int x = tmp->next->data;
 		DNode *tmp2 = tmp->next;
 		tmp->next = tmp->next->next;
 		tmp->next->next->prev = tmp->next;
 		delete tmp2;
+		size -= 1;
 		return x;
-	}
+	} // if
+	else {
+		return 0;
+	} // else
 }
 void RecursiveReverse(DLL *l2) { //6 pts
 //RECURSIVELY reverses the list
-
+//	if (l2->first == NULL) {
+//		cout << "empty list";
+//	}
+//	DNode *tmp = l2->first->next;
+//	DLL *tmpL = l2;
+//	tmpL->first = tmp;
+//	if (tmp == NULL) {
+//		cout << "one element";
+//	}
+//	RecursiveReverse(tmpL);
+//	l2->first->next->next = l2->first;
+//	l2->first->next = NULL;
+//	l2->first = tmp;
 }
 void DLL::sortDLL() { //10 pts
 //sort the list from smallest to largest
@@ -187,6 +235,7 @@ void DLL::sortDLL() { //10 pts
 }
 
 void DLL::Merge2(DLL *l2) { //10 pts
+
 //Merge two sorted lists into one longer sorted list, and setting
 //the current list to the longer sorted list
 // Note that I sorted both lists before I called this.

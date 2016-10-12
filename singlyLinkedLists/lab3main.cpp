@@ -173,24 +173,26 @@ int main() {
 	cout << endl << "RemoveDuplicates()" << endl;
 	list1->RemoveDuplicates();
 	list1->printDLL();
-	/*
-	DLL *list2 = new DLL;
-	list2->addFirst(rand()%50);
-	list2->printDLL();
-	for (int i = 0; i < 8; i++) {
-		if (i == 4) {
-			list2->push(42);
-			i++;
-		}
-		else {
-			list2->push(rand()%50);
-		}
-	}
-	list2->printDLL();
-	list2->sortDLL();
-	list2->printDLL();
-	list1->Merge2(list2);
-	list1->printDLL();
-	*/
+
+//	cout << endl << "New List" << endl;
+//	DLL *list2 = new DLL;
+//	list2->addFirst(rand()%50);
+//	list2->printDLL();
+//	for (int i = 0; i < 8; i++) {
+//		if (i == 4) {
+//			list2->push(42);
+//			i++;
+//		}
+//		else {
+//			list2->push(rand()%50);
+//		}
+//	}
+//	list2->printDLL();
+//	list2->sortDLL();
+//	list2->printDLL();
+//	cout << endl << "Merge2" << endl;
+//	list1->Merge2(list2);
+//	list1->printDLL();
+
 }
 

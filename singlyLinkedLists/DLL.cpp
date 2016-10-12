@@ -205,19 +205,19 @@ int DLL::remKth(int k) { //4 pts
 }
 void RecursiveReverse(DLL *l2) { //6 pts
 //RECURSIVELY reverses the list
-//	if (l2->first == NULL) {
-//		cout << "empty list";
-//	}
-//	DNode *tmp = l2->first->next;
-//	DLL *tmpL = l2;
-//	tmpL->first = tmp;
-//	if (tmp == NULL) {
-//		cout << "one element";
-//	}
-//	RecursiveReverse(tmpL);
-//	l2->first->next->next = l2->first;
-//	l2->first->next = NULL;
-//	l2->first = tmp;
+	if (l2->first == NULL) {
+		cout << "empty list";
+	}
+	DNode *tmp = l2->first->next;
+	DLL *tmpL = l2;
+	tmpL->first = tmp;
+	if (tmp == NULL) {
+		cout << "one element";
+	}
+	RecursiveReverse(tmpL);
+	l2->first->next->next = l2->first;
+	l2->first->next = NULL;
+	l2->first = tmp;
 }
 void DLL::sortDLL() { //10 pts
 //sort the list from smallest to largest
@@ -235,7 +235,31 @@ void DLL::sortDLL() { //10 pts
 }
 
 void DLL::Merge2(DLL *l2) { //10 pts
-
+	DLL *tmp = NULL;
+	DNode *marker1 = first;
+	DNode *marker2 = l2->first;
+	while (marker1 != NULL && marker2 != NULL) {
+		if (marker1 == NULL) {
+			tmp->push(marker2->data);
+		}
+		if (marker2 == NULL) {
+			tmp->push(marker1->data);
+		}
+		if (marker1->data > marker2->data) {
+			tmp->push(marker2->data);
+			marker2 = marker2->next;
+		}
+		if (marker1->data < marker2->data) {
+			tmp->push(marker1->data);
+			marker1 = marker1->next;
+		}
+		if (marker1->data == marker2->data) {
+			tmp->push(marker1->data);
+			tmp->push(marker2->data);
+			marker1 = marker1->next;
+			marker2 = marker2->next;
+		}
+	}
 //Merge two sorted lists into one longer sorted list, and setting
 //the current list to the longer sorted list
 // Note that I sorted both lists before I called this.

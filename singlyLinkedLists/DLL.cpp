@@ -50,7 +50,7 @@ void DLL::addFirst(int x) { //2 pts
 	first = n;
 	last = n;
 	size += 1;
-}
+} // addFirst
 void DLL::addAtFront(int x) { //2 pts
 //	add a new node to the beginning of the list
 	if (first == NULL) {
@@ -73,17 +73,17 @@ void DLL::push(int x) { //2 pts
 	if (first == NULL) {
 		first->prev = NULL;
 		first = tmp;
-	}
+	} // if
 	else {
 		while (final->next != NULL) {
 			final = final->next;
-		}
+		} // while
 		final->next = tmp;
 		tmp->prev = final;
 		last = tmp;
-	}
+	} // else
 	size += 1;
-}
+} // push
 
 void DLL::addAtK(int x, int k){ //4 pts
 //add at position k a new node with x as the data
@@ -92,71 +92,73 @@ void DLL::addAtK(int x, int k){ //4 pts
 		tmp->next = first;
 		if (first != NULL) {
 			first->prev = tmp;
-		}
+		} // if (first != NULL)
 		first = tmp;
-	}
+	} // if (k <= 1)
 	if (k >= size) {
 		tmp->prev = last;
 		if (last != NULL) {
 			last->next = tmp;
-		}
+		} // if (last != NULL)
 		last = tmp;
-	}
+	} // if (k >= size)
 	if ((k > 1) && (k < size)) {
 		DNode *tmp2 = first;
 		for (int i = k; k > 1; k--) {
 			tmp2 = tmp2->next;
-		}
+		} // for
 		tmp->next = tmp2;
 		if (tmp2->prev != NULL) {
 			tmp2->prev->next = tmp;
-		}
+		} // if (tmp2->prev != NULL)
 		tmp2->prev = tmp;
-	}
+	} // if ((k > 1) && (k < size))
 	size += 1;
-}
+} // addAtK
 void DLL::join(DLL *list2){ //2 pts
 // join list 2 to the end of the list, modifying the size of the list
 	int size2 = list2->size;
 	if (first == NULL) {
 		cout << "first list empty";
-	}
+	} // if
 	else if (list2->first == NULL) {
 		cout << "second list empty";
-	}
+	} // else if
 	else {
 		last->next = list2->first;
 		list2->first->prev = last;
 		size += size2;
-	}
-}
+	} // else
+} // join
 
 int DLL::pop() { //5 pts
 //popping the last node off the end of the list and returning that data
 	DNode *tmp = last;
 	if (first == NULL) {
 		return 0;
-	}
+	} // if
 	if (first == last) {
 		first = NULL;
 		last = NULL;
 		size -= 1;
 		return tmp->data;
-	}
+	} // if
 	else {
 		tmp->prev->next = NULL;
 		last = tmp->prev;
 		size -= 1;
 		return tmp->data;
-	}
-}
-  DNode *DLL::findKth(int k) {
+	} // else
+} // pop
+
+DNode *DLL::findKth(int k) {
 //find the element at the kth position and returning a pointer to that node
 	DNode *temp = first;
 	for (int i = 0; i < k; i++)
 		temp = temp->next;
 	return temp;
-}
+} // findKth
+
 int DLL::findK(int k) {
 	DNode *tmp = first;
 	int ind = 0;
@@ -176,14 +178,15 @@ int DLL::remFirst() { //2 pts
 	DNode *tmp = first;
 	if (first == 0) {
 		return 0;
-	}
+	} // if
 	else {
 		first = tmp->next;
 		first->prev = NULL;
 		size -= 1;
 		return tmp->data;
-	}
-}
+	} // else
+} // remFirst
+
 int DLL::remKth(int k) { //4 pts
 //remove the kth element of the list, returning its data
 	DNode *tmp = first;
@@ -202,23 +205,24 @@ int DLL::remKth(int k) { //4 pts
 	else {
 		return 0;
 	} // else
-}
-void RecursiveReverse(DLL *l2) { //6 pts
-//RECURSIVELY reverses the list
-	if (l2->first == NULL) {
-		cout << "empty list";
-	}
-	DNode *tmp = l2->first->next;
-	DLL *tmpL = l2;
-	tmpL->first = tmp;
-	if (tmp == NULL) {
-		cout << "one element";
-	}
-	RecursiveReverse(tmpL);
-	l2->first->next->next = l2->first;
-	l2->first->next = NULL;
-	l2->first = tmp;
-}
+} // remKth
+
+//void RecursiveReverse(DLL *l2) { //6 pts
+////RECURSIVELY reverses the list
+////	if (l2->first == NULL) {
+////		cout << "empty list";
+////	}
+////	DNode *tmp = l2->first->next;
+////	DLL *tmpL = l2;
+////	tmpL->first = tmp;
+////	if (tmp == NULL) {
+////		cout << "one element";
+////	}
+////	RecursiveReverse(tmpL);
+////	l2->first->next->next = l2->first;
+////	l2->first->next = NULL;
+////	l2->first = tmp;
+//}
 void DLL::sortDLL() { //10 pts
 //sort the list from smallest to largest
 	for (int i = 0; i < size; i++) {
@@ -228,38 +232,38 @@ void DLL::sortDLL() { //10 pts
 				int tmpNum = tmp->data;
 				tmp->data = tmp->next->data;
 				tmp->next->data = tmpNum;
-			}
+			} // if
 			tmp = tmp->next;
-		}
-	}
-}
+		} // for
+	} // for
+} // sortDLL
 
-void DLL::Merge2(DLL *l2) { //10 pts
-	DLL *tmp = NULL;
-	DNode *marker1 = first;
-	DNode *marker2 = l2->first;
-	while (marker1 != NULL && marker2 != NULL) {
-		if (marker1 == NULL) {
-			tmp->push(marker2->data);
-		}
-		if (marker2 == NULL) {
-			tmp->push(marker1->data);
-		}
-		if (marker1->data > marker2->data) {
-			tmp->push(marker2->data);
-			marker2 = marker2->next;
-		}
-		if (marker1->data < marker2->data) {
-			tmp->push(marker1->data);
-			marker1 = marker1->next;
-		}
-		if (marker1->data == marker2->data) {
-			tmp->push(marker1->data);
-			tmp->push(marker2->data);
-			marker1 = marker1->next;
-			marker2 = marker2->next;
-		}
-	}
+//void DLL::Merge2(DLL *l2) { //10 pts
+//	DLL *tmp = NULL;
+//	DNode *marker1 = first;
+//	DNode *marker2 = l2->first;
+//	while (marker1 != NULL && marker2 != NULL) {
+//		if (marker1 == NULL) {
+//			tmp->push(marker2->data);
+//		}
+//		if (marker2 == NULL) {
+//			tmp->push(marker1->data);
+//		}
+//		if (marker1->data > marker2->data) {
+//			tmp->push(marker2->data);
+//			marker2 = marker2->next;
+//		}
+//		if (marker1->data < marker2->data) {
+//			tmp->push(marker1->data);
+//			marker1 = marker1->next;
+//		}
+//		if (marker1->data == marker2->data) {
+//			tmp->push(marker1->data);
+//			tmp->push(marker2->data);
+//			marker1 = marker1->next;
+//			marker2 = marker2->next;
+//		}
+//	}
 //Merge two sorted lists into one longer sorted list, and setting
 //the current list to the longer sorted list
 // Note that I sorted both lists before I called this.
@@ -296,7 +300,7 @@ void DLL::Merge2(DLL *l2) { //10 pts
 // n=3,4,7,8,12,12,13,15,22,23,24,27
 // l1 = 29    l2
 // n=3,4,7,8,12,12,13,15,22,23,24,27,29
-}
+//}
 void DLL::RemoveDuplicates() { //12pts
 // assumes the list is unsorted, removes all duplicates from the list
 //Note how massively easier this would be if we just sorted the list first...
@@ -310,15 +314,15 @@ void DLL::RemoveDuplicates() { //12pts
 				DNode *tmp = x->next;
 				y->next = tmp;
 				x = tmp;
-			}
+			} // if
 			mark = mark->next;
-		}
+		} // while (mark != NULL)
 		if (mark == x) {
 			y = x;
 			x = x->next;
-		}
-	}
-}
+		} // if
+	} // while (x != NULL)
+} // RemoveDuplicates
 
 
 

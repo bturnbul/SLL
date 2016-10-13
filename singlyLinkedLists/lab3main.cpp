@@ -37,20 +37,24 @@ int main() {
 		}
 		list->printSLL();
 	}
-
+	cout << endl << "findKth(6)" << endl;
 	SNode *s = list->findKth(6);
 	int y = s->getData();
 	cout << y << endl;
 
+	cout << endl << "findK(42)" << endl;
 	int x = list->findK(42);
 	cout << x << endl;
+
 	/*
+	cout << endl << "addAtK(55, 4)" << endl;
 	list->addAtK(55,4);
 	list->printSLL();
 
 	list->addAtK(60,0);
 	list->printSLL();
 
+	cout << endl << "pop()" << endl;
 	x = list->pop();
 	cout << x << endl;
 	list->printSLL();
@@ -59,6 +63,7 @@ int main() {
 	cout << x << endl;
 	list->printSLL();
 	*/
+	cout << endl << "remFirst()" << endl;
 	x = list->remFirst();
 	cout << x << endl;
 	list->printSLL();
@@ -73,14 +78,18 @@ int main() {
 	cout << x << endl;
 	list->printSLL();
 	*/
+	cout << endl << "New List" << endl;
 	SLL *l2 = new SLL;
 	l2->addFirst(rand()%50);
 	for (int i = 0; i < 10; i++) {
 		l2->push(rand()%50);
 	}
 	l2->printSLL();
-	cout << endl;
+	cout << endl << "join(l2)" << endl;
 	list->join(l2);
+	list->printSLL();
+	cout << endl << "reverseList()" << endl;
+	list->reverseList();
 	list->printSLL();
 
 // Testing DLL
@@ -151,7 +160,6 @@ int main() {
 	cout << "join" << endl;
 	listd->join(ld2);
 	listd->printDLL();
-//	listd->printRevDLL();
 	cout << endl << "New List" << endl;
 	DLL *list1 = new DLL;
 	list1->addFirst(rand()%50);

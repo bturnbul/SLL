@@ -42,45 +42,38 @@ void SLL::addFirst(int x) { // 3 pts
 	first = n;
 	last = n;
 	size += 1;
-
-}
+} // addFirst
 void SLL::addAtFront(int x) {  //3 pts
 //add a new node to the front of the list with data being x
-	if (first == NULL)
-	{
+	if (first == NULL) {
 		first = new SNode(x);
 		size += 1;
-	}//end if
-	else
-	{
+	} // if
+	else {
 		SNode *temp = new SNode(x);
 		temp->next = NULL;
 		temp->next = first;
 		first = temp;
 		size += 1;
-	}
-
-}
+	} // else
+} // addAtFirst
 
 void SLL::push(int x) { //6 pts
 //add a new node to the end of the list, with data x
 	SNode* temp = new SNode(x);
 	temp->next = NULL;
 
-	if (first == NULL)
-	{
+	if (first == NULL) {
 		first = temp;
-	}// end if
-	else
-	{
+	} // if
+	else {
 		SNode* last = first;
-		while(last->next != NULL)
-		{
+		while(last->next != NULL) {
 			last = last->next;
-		}//end while
+		} // while
 		last->next = temp;
-	}//end else
-}
+	} // else
+} // push
 
 void SLL::addAtK(int x, int k){
 	SNode *tmp = first;
@@ -99,30 +92,31 @@ void SLL::addAtK(int x, int k){
 	}
 }
 void SLL::join(SLL *list2){ //3 pts
+//join the list with list2, making the current list one longer list
 	SNode* temp;
 	SNode* temp2;
 	if (first == NULL || list2->first == NULL) {
 		cout << "One or both lists are empty" << endl;
-	}//end if
+	} // if
 	else {
 		temp = first;
 		if (temp->next == NULL) {
 			temp->next = list2->first;
-		}//end if
+		} // if
 		else {
 			while ( temp->next != NULL) {
 				temp2=temp;
 				temp =temp->next;
-			}//end while
+			} // while
 			temp->next = list2->first;
-		}//end else
-	}//end else
-}//join the list with list2, making the current list one longer list
+		} // else
+	} // else
+} // join
 
 int SLL::pop() {
 	if (size > 0) {
 		int x = last->data;
-		if (first != last ){
+		if (first != last){
 			SNode *tmp = first;
 			for (int i = 0; i < size-1;i++) {
 				tmp = tmp->next;
@@ -158,14 +152,14 @@ int SLL::findK(int k) {
 	while (tmp != NULL && tmp->data != k) {
 		tmp = tmp->next;
 		ind++;
-	}
+	} // while
 	if (ind < size) {
 		return ind;
-	}
+	} // if
 	else {
 		return -1;
-	}
-}
+	} // else
+} // findK
 int SLL::remFirst() { //3 pts
 //remove the first node from the list, returning its data
 	SNode *tmp = first;
@@ -173,31 +167,32 @@ int SLL::remFirst() { //3 pts
 	first = first->next;
 	free(tmp);
 	return tmpData;
-}
+} // remFirst
 int SLL::remKth(int k) {
 	if (k < size && k > 0) {
 		SNode *tmp = first;
 		for (int i = 0; i < k - 1; i++) {
 			tmp = tmp->next;
-		}
+		} // for
 		int x = tmp->next->data;
 		SNode *tmp2 = tmp->next;
 		tmp->next = tmp->next->next;
 		delete tmp2;
 		return x;
-	}
+	} // if
 	else {
 		return 0;
-	}
-}
+	} // else
+} // remKth
 void SLL::reverseList() { // 10 pts
-	SNode *current = first;
-	SNode *previous = NULL;
+	SNode *marker = first;
+	SNode *prev = NULL;
 	SNode *nxt = NULL;
-	while(current != NULL) {
-		nxt = current->next;
-		current->next = previous;
-		previous = current;
-		current = nxt;
-	}
-}
+	while(marker != NULL) {
+		nxt = marker->next;
+		marker->next = prev;
+		prev = marker;
+		marker = nxt;
+	} // while
+	first = prev;
+} // reverseList
